@@ -1,1 +1,2 @@
+pip install mysqlclient-1.4.2-cp36-cp36m-win_amd64.whl
 pip install -i https://pypi.douban.com/simple -r list.txt

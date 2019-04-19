@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="88bc12b2-6e61-4132-94d1-efcba7f260b3" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/env/pipcmd.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/bd.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/bd.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/env/pipcmd.txt" beforeDir="false" afterPath="$PROJECT_DIR$/env/pipcmd.txt" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -41,7 +38,7 @@
         <entry file="file://$PROJECT_DIR$/env/pipcmd.txt">
           <provider selected="true" editor-type-id="text-editor">
             <state>
-              <caret column="57" selection-start-column="57" selection-end-column="57" />
+              <caret column="54" selection-start-column="54" selection-end-column="54" />
             </state>
           </provider>
         </entry>
@@ -232,7 +229,7 @@
     <entry file="file://$PROJECT_DIR$/env/pipcmd.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state>
-          <caret column="57" selection-start-column="57" selection-end-column="57" />
+          <caret column="54" selection-start-column="54" selection-end-column="54" />
         </state>
       </provider>
     </entry>
