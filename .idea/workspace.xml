@@ -2,7 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="88bc12b2-6e61-4132-94d1-efcba7f260b3" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/env/pipcmd.txt" beforeDir="false" afterPath="$PROJECT_DIR$/env/pipcmd.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/bd.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/bd.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/env/list.txt" beforeDir="false" afterPath="$PROJECT_DIR$/env/list.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/spiders/broadband.py" beforeDir="false" afterPath="$PROJECT_DIR$/spiders/broadband.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/宽带.txt" beforeDir="false" afterPath="$PROJECT_DIR$/宽带.txt" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -19,8 +24,8 @@
       <file leaf-file-name="test.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="133" column="30" selection-start-line="133" selection-start-column="30" selection-end-line="133" selection-end-column="30" />
+            <state>
+              <caret selection-end-column="20" />
               <folding>
                 <element signature="e#69#84#0" expanded="true" />
                 <element signature="e#113#43715#0" />
@@ -29,21 +34,58 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="list.txt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/env/list.txt">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file leaf-file-name="pipcmd.txt" pinned="false" current-in-tab="true">
+      <file leaf-file-name="pipcmd.txt" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/env/pipcmd.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="54" selection-start-column="54" selection-end-column="54" />
+            <state relative-caret-position="28">
+              <caret line="1" selection-start-line="1" selection-end-line="1" selection-end-column="57" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="broadband.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/spiders/broadband.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="372">
+              <caret line="248" column="34" selection-start-line="248" selection-start-column="34" selection-end-line="248" selection-end-column="34" />
+              <folding>
+                <element signature="e#2048#2120#0" />
+                <element signature="e#2160#4749#0" />
+                <element signature="e#2285#4749#0" />
+                <element signature="e#12135#12488#0" />
+                <element signature="e#12540#12834#0" />
+                <element signature="e#14808#16325#0" />
+                <element signature="e#16421#16909#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="宽带.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/宽带.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="426">
+              <caret line="31" selection-start-line="31" selection-end-line="31" selection-end-column="37" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="list.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/env/list.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="196">
+              <caret line="7" selection-start-line="7" selection-end-line="7" />
             </state>
           </provider>
         </entry>
       </file>
     </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>post_user_property_url</find>
+      <find>userinfo</find>
+    </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -52,7 +94,10 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/test.py" />
+        <option value="$PROJECT_DIR$/env/list.txt" />
         <option value="$PROJECT_DIR$/env/pipcmd.txt" />
+        <option value="$PROJECT_DIR$/宽带.txt" />
+        <option value="$PROJECT_DIR$/spiders/broadband.py" />
       </list>
     </option>
   </component>
@@ -65,11 +110,11 @@
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="84" />
-    <option name="y" value="24" />
-    <option name="width" value="1386" />
-    <option name="height" value="789" />
+  <component name="ProjectFrameBounds" extendedState="7">
+    <option name="x" value="83" />
+    <option name="y" value="23" />
+    <option name="width" value="1753" />
+    <option name="height" value="970" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -88,6 +133,11 @@
               <item name="bd" type="b2602c69:ProjectViewProjectNode" />
               <item name="bd" type="462c0819:PsiDirectoryNode" />
               <item name="env" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="bd" type="b2602c69:ProjectViewProjectNode" />
+              <item name="bd" type="462c0819:PsiDirectoryNode" />
+              <item name="spiders" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -168,7 +218,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32843137" />
@@ -178,7 +228,7 @@
       <window_info anchor="bottom" id="Python Console" order="7" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32843137" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.32843137" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25383994" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.05764075" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="right" id="SciView" order="3" />
@@ -200,7 +250,30 @@
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <option name="time" value="1" />
+    </breakpoint-manager>
+  </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="336">
+          <caret line="133" column="30" selection-start-line="133" selection-start-column="30" selection-end-line="133" selection-end-column="30" />
+          <folding>
+            <element signature="e#69#84#0" expanded="true" />
+            <element signature="e#113#43715#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/env/pipcmd.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="54" selection-start-column="54" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/test.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="351">
@@ -212,10 +285,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/env/list.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="196">
+          <caret line="7" selection-start-line="7" selection-end-line="7" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="133" column="30" selection-start-line="133" selection-start-column="30" selection-end-line="133" selection-end-column="30" />
+        <state>
+          <caret selection-end-column="20" />
           <folding>
             <element signature="e#69#84#0" expanded="true" />
             <element signature="e#113#43715#0" />
@@ -223,13 +303,33 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/env/list.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/env/pipcmd.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="54" selection-start-column="54" selection-end-column="54" />
+        <state relative-caret-position="28">
+          <caret line="1" selection-start-line="1" selection-end-line="1" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/宽带.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="426">
+          <caret line="31" selection-start-line="31" selection-end-line="31" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spiders/broadband.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="372">
+          <caret line="248" column="34" selection-start-line="248" selection-start-column="34" selection-end-line="248" selection-end-column="34" />
+          <folding>
+            <element signature="e#2048#2120#0" />
+            <element signature="e#2160#4749#0" />
+            <element signature="e#2285#4749#0" />
+            <element signature="e#12135#12488#0" />
+            <element signature="e#12540#12834#0" />
+            <element signature="e#14808#16325#0" />
+            <element signature="e#16421#16909#0" />
+          </folding>
         </state>
       </provider>
     </entry>
