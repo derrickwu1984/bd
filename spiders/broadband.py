@@ -209,7 +209,7 @@ class BroadbandSpider(scrapy.Spider):
             # yield userInfo
             # 用户属性信息
             #查询用户综合信息
-            yield scrapy.FormRequest(url=userinfo_request_url, formdata=self.user_info_dataForm(), method="POST",headers=self.get_headers(), cookies=self.get_cookie(),
+            yield scrapy.Request(url=userinfo_request_url,headers=self.get_headers(), cookies=self.get_cookie(),
                                       callback=self.query_user_info,meta={'broadbandNo': broadbandNo},dont_filter=True)
     def query_user_info(self,response):
         html = etree.HTML(response.body.decode("gbk"))
