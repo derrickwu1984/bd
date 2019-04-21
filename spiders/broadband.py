@@ -22,7 +22,7 @@ from scrapy.http.cookies import CookieJar
 
 
 class BroadbandSpider(scrapy.Spider):
-    name = 'cbss'
+    name = 'broadband'
     allowed_domains = ['cbss.10010.com']
     start_urls = ['https://cbss.10010.com/essframe']
     login_url = "https://cbss.10010.com/essframe"
@@ -32,19 +32,15 @@ class BroadbandSpider(scrapy.Spider):
 
 
     # post_user_property_url = "https://bj.cbss.10010.com/custserv?service=swallow/common.UtilityPage/getInterfaceElement_first/1"
-    # driver_path="D:/tools/IEDriverServer.exe"
+    driver_path="D:/tools/IEDriverServer.exe"
     # driver_path = "Z:/tools/IEDriverServer.exe"
-    driver_path = "C:/IEDriverServer.exe"
+    # driver_path = "C:/IEDriverServer.exe"
     userName = "bjsc-wangj1"
     passWd = "BySh@2019"
     province_code = "bj"
     depart_id = "11b2pk1"
     province_id = "11"
     driver = webdriver.Ie(driver_path)
-    openmenu = self.driver.find_element_by_id("CSMB043").get_attribute("onclick")
-    r = re.findall(r"'([\S\s]+?)'", openmenu)
-    userinfo_request_url = "https://" + self.province_code + ".cbss.10010.com" + r[
-        0] + "&staffId=" + self.userName + "&departId=" + self.depart_id + "&subSysCode=CBS&eparchyCode=0010"
     js_exec = "var but_click=document.getElementsByClassName('submit')[0].children[0].onclick"
 
     def __init__(self,broadbandNo,startNo,endNo):
@@ -66,43 +62,47 @@ class BroadbandSpider(scrapy.Spider):
         yield scrapy.Request(self.login_url, callback=self.login)
 
         #     登录逻辑
-        def login(self, response):
-            self.driver.get(self.login_url)
-            time.sleep(3)
-            self.driver.find_element_by_id("STAFF_ID").send_keys(self.userName)
-            self.driver.find_element_by_id("LOGIN_PASSWORD").send_keys(self.passWd)
-            Select(self.driver.find_element_by_name("LOGIN_PROVINCE_CODE")).select_by_value(self.province_id)
-            WebDriverWait(self.driver, 1000).until(EC.url_to_be(self.initmy_url))
-            logging.warning("恭喜您，您已登录成功了！")
-            WebDriverWait(self.driver, 600).until(EC.presence_of_element_located((By.ID, 'navframe')))
-            self.driver.switch_to.frame("navframe")
-            # time.sleep(30)
-            WebDriverWait(self.driver, 600).until(EC.presence_of_element_located((By.ID, 'SECOND_MENU_LINK_BIL6500')))
-            # in order to find CSM1001
-            js_query_acct = "var query_acct=document.getElementById('SECOND_MENU_LINK_BIL6500').onclick()"
-            self.driver.execute_script(js_query_acct)
-            time.sleep(3)
-            # WebDriverWait(driver, 600).until(EC.presence_of_element_located((By.ID, 'CSM1001')))
-            WebDriverWait(self.driver, 600).until(EC.presence_of_element_located((By.ID, 'BIL6531')))
-            openmenu = self.driver.find_element_by_id("BIL6531").get_attribute("onclick")
-            r = re.findall(r"'([\S\s]+?)'", openmenu)
-            request_url = "https://" + self.province_code + ".cbss.10010.com" + r[
-                0] + "&staffId=" + self.userName + "&departId=" + self.depart_id + "&subSysCode=CBS&eparchyCode=0010"
-            requests.adapters.DEFAULT_RETRIES = 5
-            s = requests.session()
-            cookies_dict = {}
-            cookies = self.driver.get_cookies()
-            for cookie in cookies:
-                cookies_dict[cookie['name']] = cookie['value']
-            with open('cookies.txt', 'w+') as f:
-                json.dump(cookies_dict, f)
-            with open('cookies.txt', 'r') as f:
-                cookie_out = json.load(f)
-            headers = {
+    def login(self, response):
+        self.driver.get(self.login_url)
+        time.sleep(3)
+        self.driver.find_element_by_id("STAFF_ID").send_keys(self.userName)
+        self.driver.find_element_by_id("LOGIN_PASSWORD").send_keys(self.passWd)
+        Select(self.driver.find_element_by_name("LOGIN_PROVINCE_CODE")).select_by_value(self.province_id)
+        WebDriverWait(self.driver, 1000).until(EC.url_to_be(self.initmy_url))
+        logging.warning("恭喜您，您已登录成功了！")
+        WebDriverWait(self.driver, 600).until(EC.presence_of_element_located((By.ID, 'navframe')))
+        self.driver.switch_to.frame("navframe")
+        # time.sleep(30)
+        WebDriverWait(self.driver, 600).until(EC.presence_of_element_located((By.ID, 'SECOND_MENU_LINK_BIL6500')))
+        # in order to find CSM1001
+        js_query_acct = "var query_acct=document.getElementById('SECOND_MENU_LINK_BIL6500').onclick()"
+        self.driver.execute_script(js_query_acct)
+        time.sleep(3)
+        # WebDriverWait(driver, 600).until(EC.presence_of_element_located((By.ID, 'CSM1001')))
+        WebDriverWait(self.driver, 600).until(EC.presence_of_element_located((By.ID, 'BIL6531')))
+        openmenu = self.driver.find_element_by_id("BIL6531").get_attribute("onclick")
+        r = re.findall(r"'([\S\s]+?)'", openmenu)
+        request_url = "https://" + self.province_code + ".cbss.10010.com" + r[
+            0] + "&staffId=" + self.userName + "&departId=" + self.depart_id + "&subSysCode=CBS&eparchyCode=0010"
+        openmenu_1 = self.driver.find_element_by_id("CSMB043").get_attribute("onclick")
+        r_1 = re.findall(r"'([\S\s]+?)'", openmenu_1)
+        userinfo_request_url = "https://" +self.province_code + ".cbss.10010.com" + r_1[
+            0] + "&staffId=" + self.userName + "&departId=" + self.depart_id + "&subSysCode=CBS&eparchyCode=0010"
+        requests.adapters.DEFAULT_RETRIES = 5
+        s = requests.session()
+        cookies_dict = {}
+        cookies = self.driver.get_cookies()
+        for cookie in cookies:
+            cookies_dict[cookie['name']] = cookie['value']
+        with open('cookies.txt', 'w+') as f:
+            json.dump(cookies_dict, f)
+        with open('cookies.txt', 'r') as f:
+            cookie_out = json.load(f)
+        headers = {
                 'referer': 'https://bj.cbss.10010.com/essframe?service=page/component.Navigation&listener=init&needNotify=true&staffId=' + self.userName + '&departId=' + self.depart_id + '&subSysCode=CBS&eparchyCode=0010',
                 'Host': 'bj.cbss.10010.com'
             }
-            yield scrapy.Request(request_url, headers=headers, cookies=cookie_out, callback=self.parse_broadbandNo,
+        yield scrapy.Request(request_url, headers=headers, cookies=cookie_out, callback=self.parse_broadbandNo,
                                  meta={'reqeust_url': request_url})
     # 实时/月结账单查询 号段遍历
     def parse_broadbandNo(self,response):
