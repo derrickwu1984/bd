@@ -84,10 +84,6 @@ class BroadbandSpider(scrapy.Spider):
         r = re.findall(r"'([\S\s]+?)'", openmenu)
         request_url = "https://" + self.province_code + ".cbss.10010.com" + r[
             0] + "&staffId=" + self.userName + "&departId=" + self.depart_id + "&subSysCode=CBS&eparchyCode=0010"
-        openmenu_1 = self.driver.find_element_by_id("CSMB043").get_attribute("onclick")
-        r_1 = re.findall(r"'([\S\s]+?)'", openmenu_1)
-        userinfo_request_url = "https://" +self.province_code + ".cbss.10010.com" + r_1[
-            0] + "&staffId=" + self.userName + "&departId=" + self.depart_id + "&subSysCode=CBS&eparchyCode=0010"
         requests.adapters.DEFAULT_RETRIES = 5
         s = requests.session()
         cookies_dict = {}
@@ -130,6 +126,8 @@ class BroadbandSpider(scrapy.Spider):
             cond_PARENT_TYPE_CODE=''
             cond_ROUTE_EPARCHY_CODE='0010'
             data=self.prepare_data(cond_ROUTE_EPARCHY_CODE,query_month,phoneNo,cond_NET_TYPE_CODE,cond_PARENT_TYPE_CODE,cond_ROUTE_EPARCHY_CODE,Form0,service)
+            logging.warning("============post params============")
+            logging.warning(data)
             BSS_ACCTMANM_JSESSIONID_array=BSS_ACCTMANM_JSESSIONID.split("=")
             BSS_ACCTMANM_JSESSIONID_key=BSS_ACCTMANM_JSESSIONID_array[0]
             BSS_ACCTMANM_JSESSIONID_value = BSS_ACCTMANM_JSESSIONID_array[1]
@@ -142,12 +140,9 @@ class BroadbandSpider(scrapy.Spider):
                 'Host':'bj.cbss.10010.com',
             }
             # 查询月账单信息
-            yield scrapy.FormRequest(url=post_url, formdata=data, method="POST",cookies=cookie_billPage, callback=self.parse_monthly_bill,meta={'phoneNo':phoneNo,"headNo":headNo,"query_month":query_month})
-            #查询用户综合信息
-            yield scrapy.FormRequest(url=self.userinfo_request_url, formdata=data, method="POST", cookies=cookie_billPage,
-                                     callback=self.query_user_info,
-                                     meta={'phoneNo': phoneNo, "headNo": headNo, "query_month": query_month})
-
+            yield scrapy.FormRequest(url=post_url, formdata=data, method="POST",
+                                     cookies=cookie_billPage, callback=self.parse_monthly_bill,
+                                     meta={'phoneNo':phoneNo,"headNo":headNo,"query_month":query_month})
     # 实时/月结账单查询 数据解析
     def parse_monthly_bill(self, response):
         response_str=response.body.decode("gbk")
@@ -156,6 +151,10 @@ class BroadbandSpider(scrapy.Spider):
         headNo =response.meta['headNo']
         query_month=response.meta['query_month']
         error_msg =""
+        openmenu_1 = self.driver.find_element_by_id("CSMB043").get_attribute("onclick")
+        r_1 = re.findall(r"'([\S\s]+?)'", openmenu_1)
+        userinfo_request_url = "https://" + self.province_code + ".cbss.10010.com" + r_1[
+            0] + "&staffId=" + self.userName + "&departId=" + self.depart_id + "&subSysCode=CBS&eparchyCode=0010"
         try:
             error_msg=html.xpath("//div[@class='tip']/ul/li/text()")[0].split("：")[0]
         except:
@@ -165,7 +164,7 @@ class BroadbandSpider(scrapy.Spider):
         else:
             logging.warning(broadbandNo+"宽带号有效！")
             userid=html.xpath('//input[@name="back_USER_ID"]/@value')[0]
-            user_property_dataForm = self.user_property_dataForm("7","csInterquery", broadbandNo, userid)
+            # user_property_dataForm = self.user_property_dataForm("7","csInterquery", broadbandNo, userid)
             acctflag=html.xpath("//table/tr/td[2]//text()")[12].strip()
             paytype=html.xpath("//table/tr/td[2]//text()")[13].strip()
             debtfee=html.xpath("//table/tr/td[2]//text()")[14].strip()
@@ -209,25 +208,26 @@ class BroadbandSpider(scrapy.Spider):
             # 账单信息
             # yield userInfo
             # 用户属性信息
-            yield scrapy.FormRequest(url=self.post_user_property_url, formdata=self.user_info_dataForm(), method="POST",headers=self.get_headers(), cookies=self.get_cookie(),
-                                      callback=self.get_user_property__info,meta={'broadbandNo': broadbandNo},dont_filter=True)
+            #查询用户综合信息
+            yield scrapy.FormRequest(url=userinfo_request_url, formdata=self.user_info_dataForm(), method="POST",headers=self.get_headers(), cookies=self.get_cookie(),
+                                      callback=self.query_user_info,meta={'broadbandNo': broadbandNo},dont_filter=True)
     def query_user_info(self,response):
         html = etree.HTML(response.body.decode("gbk"))
         DateField=""
         _BoInfo=html.xpath('//input[@name="_BoInfo"]/@value')[0]
         ACCPROVICE_ID=html.xpath('//input[@name="ACCPROVICE_ID"]/@value')[0]
         allInfo=html.xpath('//input[@name="allInfo"]/@value')[0]
-        phoneNo = response.meta['phoneNo']
+        broadbandNo = response.meta['broadbandNo']
         currentRightCode=html.xpath('//input[@name="currentRightCode"]/@value')[0]
         Form0 = html.xpath('//input[@name="Form0"]/@value')[0]
         PROVICE_ID= html.xpath('//input[@name="PROVICE_ID"]/@value')[0]
         queryTradehide=html.xpath('//input[@name="queryTradehide"]/@value')[0]
         service=html.xpath('//input[@name="service"]/@value')[0]
         tabSetList=html.xpath('//input[@name="tabSetList"]/@value')[0]
-        dataForm=self.custserv_dataForm(DateField,_BoInfo,ACCPROVICE_ID,allInfo,phoneNo,ACCPROVICE_ID,currentRightCode,Form0,PROVICE_ID,queryTradehide,service,tabSetList)
+        dataForm=self.custserv_dataForm(DateField,_BoInfo,ACCPROVICE_ID,allInfo,broadbandNo,ACCPROVICE_ID,currentRightCode,Form0,PROVICE_ID,queryTradehide,service,tabSetList)
         post_intetrated_url="https://bj.cbss.10010.com/custserv"
         yield scrapy.FormRequest(url=post_intetrated_url, formdata=dataForm, method="POST", headers=self.get_headers(),cookies=self.get_cookie(),
-                                 callback=self.get_user_property__info,meta={'phoneNo': phoneNo},dont_filter=True)
+                                 callback=self.get_user_property__info,meta={'phoneNo': broadbandNo},dont_filter=True)
     # 获取用户属性信息
     def get_user_property__info(self,response):
         logging.warning("============get_user_property_info============")
@@ -265,6 +265,44 @@ class BroadbandSpider(scrapy.Spider):
             'Host':'bj.cbss.10010.com'
         }
         return headers
+
+    def prepare_data(self,eparchy_code,query_month,phoneNo,cond_NET_TYPE_CODE,cond_PARENT_TYPE_CODE,cond_ROUTE_EPARCHY_CODE,Form0,service):
+        data={
+            "back_ACCT_ID":"",
+            "back_USER_ID":"",
+            "bquerytop":"+%B2%E9+%D1%AF+",
+            "cond_ACCT_ID":"",
+            "cond_BILLSEARCH_FLAG":"0",
+            "cond_CBSSREQUEST_SOURCE":"",
+            "cond_CONFIG_BILLCOUNT":"800",
+            "cond_CYCLE_ID":query_month,
+            "cond_CYCLE_SEGMENT":"6",
+            "cond_END_CYCLE_ID":query_month,
+            "cond_ID_TYPE":"1",
+            "cond_NET_TYPE_CODE":"",
+            "cond_NODISTURB":"",
+            "cond_PARENT_TYPE_CODE":"",
+            "cond_PRE_TAG":"0",
+            "cond_REMOVE_TAG":"0",
+            "cond_ROUTE_EPARCHY_CODE":"",
+            "cond_SEND_SN":'',
+            "cond_SENDBILLSMS_RIGHT":"0",
+            "cond_SERIAL_NUMBER":phoneNo,
+            "cond_SMS":"",
+            "cond_USER_ID":"",
+            "cond_USER_SERVICE_CODE":"",
+            "cond_WRITEOFF_MODE":"1",
+            "cond_X_USER_COUNT":"",
+            "Form0":Form0,
+            "MULTI_ACCT_DATA":"",
+            "NOTE_ITEM_DISPLAY":"false",
+            "service":service,
+            "smsFlag":"false",
+            "sp":"S0",
+            "userinfoback_USER_ID":"",
+            "X_CODING_STR":""
+        }
+        return data
     # 用户综合资料查询报文数据格式
     def custserv_dataForm(self,DateField,_BoInfo,ACCPROVICE_ID,allInfo,phoneNo,proviceCode,currentRightCode,Form0,PROVICE_ID,queryTradehide,service,tabSetList):
         data={
