@@ -261,6 +261,7 @@ class BroadbandSpider(scrapy.Spider):
         logging.warning(broadbandNo)
         # html = bytes(bytearray(response_str, encoding='utf8'))
         html = etree.HTML(response_str)
+        logging.warning(response_str)
         jsn = json.loads(html.xpath("//input[@id='userAttrInfo']/@value")[0])
         moffice_name = jsn['MOFFICE_NAME']
         detail_installed_address = jsn['DETAIL_INSTALL_ADDRESS']
