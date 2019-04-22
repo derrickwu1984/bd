@@ -9,6 +9,45 @@ import scrapy
 
 
 class BdItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
+    crawldate = scrapy.Field()
+    userid = scrapy.Field()
+    rangeno = scrapy.Field()
+    broadbandNo = scrapy.Field()
+    querymonth = scrapy.Field()
+    acctflag = scrapy.Field()
+    paytype = scrapy.Field()
+    debtfee = scrapy.Field()
+    fixtype = scrapy.Field()
+    payname = scrapy.Field()
+    prodname = scrapy.Field()
+    fee = scrapy.Field()
+    openflag = scrapy.Field()
+    custbrand = scrapy.Field()
+    actualbal = scrapy.Field()
+    custlocation = scrapy.Field()
+    creditbal = scrapy.Field()
+    totalfee = scrapy.Field()
+    actualfee = scrapy.Field()
+    pass
+
+class CustinfoItem(scrapy.Item):
+    crawldate = scrapy.Field()
+    userid = scrapy.Field()
+    rangeno = scrapy.Field()
+    phoneno = scrapy.Field()
+    querymonth = scrapy.Field()
+    acctflag = scrapy.Field()
+    paytype = scrapy.Field()
+    debtfee = scrapy.Field()
+    fixtype = scrapy.Field()
+    payname = scrapy.Field()
+    prodname = scrapy.Field()
+    fee = scrapy.Field()
+    openflag = scrapy.Field()
+    custbrand = scrapy.Field()
+    actualbal = scrapy.Field()
+    custlocation = scrapy.Field()
+    creditbal = scrapy.Field()
+    totalfee = scrapy.Field()
+    actualfee = scrapy.Field()
     pass
