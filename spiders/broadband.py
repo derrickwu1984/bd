@@ -148,6 +148,7 @@ class BroadbandSpider(scrapy.Spider):
     def parse_monthly_bill(self, response):
         response_str=response.body.decode("gbk")
         html = etree.HTML(response_str)
+
         broadbandNo=response.meta['broadbandNo']
         headNo =response.meta['headNo']
         query_month=response.meta['query_month']
@@ -165,36 +166,59 @@ class BroadbandSpider(scrapy.Spider):
             logging.warning(broadbandNo+"宽带号未查询到或已被注销！")
         else:
             logging.warning(broadbandNo+"宽带号有效！")
+            logging.warning("parse_monthly_bill resposne %s", response_str)
             # 用户id
             userid=html.xpath('//input[@name="back_USER_ID"]/@value')[0]
             # user_property_dataForm = self.user_property_dataForm("7","csInterquery", broadbandNo, userid)
             # 账户标识
-            acctflag=html.xpath("//table/tr[1]/td[2]/text()")[1].strip()
+            try:
+                acctflag=html.xpath("//table/tr[1]/td[2]/text()")[1].strip()
+            except:
+                acctflag = html.xpath("//table/tr[1]/td[2]/text()")[0].strip()
             logging.warning("acctflag = %s",acctflag)
             # 付费类型
-            paytype=html.xpath("//table/tr[2]/td[2]/text()")[1].strip()
+            try:
+                paytype=html.xpath("//table/tr[2]/td[2]/text()")[1].strip()
+            except:
+                paytype = html.xpath("//table/tr[2]/td[2]/text()")[0].strip()
             logging.warning("paytype = %s", paytype)
             # 欠费
-            debtfee=html.xpath("//table/tr[3]/td[2]/text()")[1].strip()
+            try:
+                debtfee=html.xpath("//table/tr[3]/td[2]/text()")[1].strip()
+            except:
+                debtfee = html.xpath("//table/tr[3]/td[2]/text()")[0].strip()
             logging.warning("debtfee = %s", debtfee)
             try:
                 # 融合类型
                 fixtype=html.xpath("//table/tr[4]/td[2]/text()")[1].strip()
             except:
-                fixtype=""
+                fixtype=html.xpath("//table/tr[4]/td[2]/text()")[0].strip()
             #     付费名称
-            payname=html.xpath("//table/tr[1]/td[4]/text()")[1].strip()
+            try:
+                payname=html.xpath("//table/tr[1]/td[4]/text()")[1].strip()
+            except:
+                payname = html.xpath("//table/tr[1]/td[4]/text()")[0].strip()
             logging.warning("payname = %s", payname)
             # 产品名称
-            prodname=html.xpath("//table/tr[2]/td[4]/text()")[1].strip()
+            try:
+                prodname=html.xpath("//table/tr[2]/td[4]/text()")[1].strip()
+            except:
+                prodname = html.xpath("//table/tr[2]/td[4]/text()")[0].strip()
+            logging.warning("prodname = %s", prodname)
             # 实时话费
             fee=html.xpath("//table/tr[3]/td[4]/text()")[1].strip()
             logging.warning("fee = %s", fee)
             # 开通状态
-            openflag=html.xpath("//table/tr[1]/td[4]/text()")[1].strip()
+            try:
+                openflag=html.xpath("//table/tr[1]/td[6]/text()")[1].strip()
+            except:
+                openflag = html.xpath("//table/tr[1]/td[6]/text()")[0].strip()
             logging.warning("openflag = %s", openflag)
             # 客户品牌
-            custbrand=html.xpath("//table/tr[2]/td[6]/text()")[1].strip()
+            try:
+                custbrand=html.xpath("//table/tr[2]/td[6]/text()")[1].strip()
+            except:
+                custbrand = html.xpath("//table/tr[2]/td[6]/text()")[0].strip()
             logging.warning("custbrand = %s", custbrand)
             # 实时结余
             actualbal=html.xpath("//table/tr[3]/td[6]/text()")[1].strip()
@@ -237,6 +261,7 @@ class BroadbandSpider(scrapy.Spider):
                                       callback=self.query_user_info,meta={'broadbandNo': broadbandNo},dont_filter=True)
     def query_user_info(self,response):
         response_str=response.body.decode("gbk")
+        # logging.warning("query_user_info response %s",response_str)
         html = etree.HTML(response_str)
         DateField=""
         _BoInfo=html.xpath('//input[@name="_BoInfo"]/@value')[0]
@@ -261,7 +286,7 @@ class BroadbandSpider(scrapy.Spider):
         logging.warning(broadbandNo)
         # html = bytes(bytearray(response_str, encoding='utf8'))
         html = etree.HTML(response_str)
-        logging.warning(response_str)
+        logging.warning("get_user_property__info response %s", response_str)
         jsn = json.loads(html.xpath("//input[@id='userAttrInfo']/@value")[0])
         moffice_name = jsn['MOFFICE_NAME']
         detail_installed_address = jsn['DETAIL_INSTALL_ADDRESS']
@@ -273,16 +298,16 @@ class BroadbandSpider(scrapy.Spider):
         use_type_code = jsn['USE_TYPE_CODE']
         terminal_start_date = jsn['TERMINAL_START_DATE']
         logging.warning("============get_user_property_info============")
-        logging.warning("moffice_name")
-        logging.warning("detail_installed_address")
-        logging.warning("installed_address")
-        logging.warning("address_id")
-        logging.warning("speed")
+        logging.warning("moffice_name %s",moffice_name)
+        logging.warning("detail_installed_address %s",detail_installed_address)
+        logging.warning("installed_address %s",installed_address)
+        logging.warning("address_id %s",address_id)
+        logging.warning("speed %s",speed)
 
-        logging.warning("link_name")
-        logging.warning("link_phone")
-        logging.warning("use_type_code")
-        logging.warning("terminal_start_date")
+        logging.warning("link_name %s",link_name)
+        logging.warning("link_phone %s",link_phone)
+        logging.warning("use_type_code %s",use_type_code)
+        logging.warning("terminal_start_date %s",terminal_start_date)
     # 获取cookie
     def get_cookie(self):
         cookies_dict = {}
