@@ -290,7 +290,8 @@ class BroadbandSpider(scrapy.Spider):
             'Host': 'bj.cbss.10010.com'
         }
         cookies = self.get_cookie()
-        del cookies["BSS_CUSTSERV_JSESSIONID"]
+        # del cookies["BSS_CUSTSERV_JSESSIONID"]
+        del cookies["LOGIN_SUBSYS_CODECBS"]
         json.dumps(cookies)
         dataForm=self.custserv_dataForm(DateField,_BoInfo,ACCPROVICE_ID,allInfo,broadbandNo,ACCPROVICE_ID,currentRightCode,Form0,PROVICE_ID,queryTradehide,service,tabSetList)
         logging.warning('dataForm={0}'.format(dataForm))
