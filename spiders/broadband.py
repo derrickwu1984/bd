@@ -103,7 +103,6 @@ class BroadbandSpider(scrapy.Spider):
                                  meta={'reqeust_url': request_url})
     # 实时/月结账单查询 号段遍历
     def parse_broadbandNo(self,response):
-
         reqeust_url=response.meta['reqeust_url']
         html=etree.HTML(response.body.decode("gbk"))
         time.sleep(10)
@@ -262,6 +261,7 @@ class BroadbandSpider(scrapy.Spider):
     def query_user_info(self,response):
         response_str=response.body.decode("gbk")
         # logging.warning("query_user_info response %s",response_str)
+        time.sleep(3)
         html = etree.HTML(response_str)
         DateField=""
         _BoInfo=html.xpath('//input[@name="_BoInfo"]/@value')[0]
@@ -274,17 +274,36 @@ class BroadbandSpider(scrapy.Spider):
         queryTradehide=html.xpath('//input[@name="queryTradehide"]/@value')[0]
         service=html.xpath('//input[@name="service"]/@value')[0]
         tabSetList=html.xpath('//input[@name="tabSetList"]/@value')[0]
+
+        logging.warning("_BoInfo={0}".format(_BoInfo))
+        logging.warning("ACCPROVICE_ID={0}".format(ACCPROVICE_ID))
+        logging.warning("allInfo={0}".format(allInfo))
+        logging.warning("broadbandNo={0}".format(broadbandNo))
+        logging.warning("currentRightCode={0}".format(currentRightCode))
+        logging.warning("Form0={0}".format(Form0))
+        logging.warning("PROVICE_ID={0}".format(PROVICE_ID))
+        logging.warning("queryTradehide={0}".format(queryTradehide))
+        logging.warning("service={0}".format(service))
+        logging.warning("tabSetList={0}".format(tabSetList))
+        headers={
+            "Referer": "https://bj.cbss.10010.com/custserv",
+            'Host': 'bj.cbss.10010.com'
+        }
+        cookies = self.get_cookie()
+        del cookies["BSS_CUSTSERV_JSESSIONID"]
+        json.dumps(cookies)
         dataForm=self.custserv_dataForm(DateField,_BoInfo,ACCPROVICE_ID,allInfo,broadbandNo,ACCPROVICE_ID,currentRightCode,Form0,PROVICE_ID,queryTradehide,service,tabSetList)
+        logging.warning('dataForm={0}'.format(dataForm))
         post_intetrated_url="https://bj.cbss.10010.com/custserv"
-        yield scrapy.FormRequest(url=post_intetrated_url, formdata=dataForm, method="POST", headers=self.get_headers(),cookies=self.get_cookie(),
+        yield scrapy.FormRequest(url=post_intetrated_url, formdata=dataForm, method="POST", headers=headers,cookies=cookies,
                                  callback=self.get_user_property__info,meta={'broadbandNo': broadbandNo},dont_filter=True)
     # 获取用户属性信息
     def get_user_property__info(self,response):
 
         broadbandNo = response.meta['broadbandNo']
+        time.sleep(5)
         response_str = response.body.decode("gbk")
         logging.warning(broadbandNo)
-        # html = bytes(bytearray(response_str, encoding='utf8'))
         html = etree.HTML(response_str)
         logging.warning("get_user_property__info response %s", response_str)
         jsn = json.loads(html.xpath("//input[@id='userAttrInfo']/@value")[0])
