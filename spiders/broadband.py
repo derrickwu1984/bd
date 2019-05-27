@@ -36,10 +36,10 @@ class BroadbandSpider(scrapy.Spider):
     # driver_path="D:/tools/IEDriverServer.exe"
     driver_path = "Z:/tools/IEDriverServer.exe"
     # driver_path = "C:/IEDriverServer.exe"
-    userName = "bjsc-wangj1"
-    passWd = "BySh@2019"
+    userName = "bjsc-zhaomx6"
+    passWd = "wang1985@"
     province_code = "bj"
-    depart_id = "11b2pk1"
+    depart_id = "11b2kv5"
     province_id = "11"
     driver = webdriver.Ie(driver_path)
     js_exec = "var but_click=document.getElementsByClassName('submit')[0].children[0].onclick"
@@ -96,14 +96,18 @@ class BroadbandSpider(scrapy.Spider):
         with open('cookies.txt', 'r') as f:
             cookie_out = json.load(f)
         headers = {
-                'referer': 'https://bj.cbss.10010.com/essframe?service=page/component.Navigation&listener=init&needNotify=true&staffId=' + self.userName + '&departId=' + self.depart_id + '&subSysCode=CBS&eparchyCode=0010',
-                'Host': 'bj.cbss.10010.com'
+                # 'referer': 'https://bj.cbss.10010.com/essframe?service=page/component.Navigation&listener=init&needNotify=true&staffId=' + self.userName + '&departId=' + self.depart_id + '&subSysCode=CBS&eparchyCode=0010',
+                'Referer': 'https://bj.cbss.10010.com/essframe?service=page/Sidebar',
+                'Host': 'bj.cbss.10010.com',
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko'
+
             }
         yield scrapy.Request(request_url, headers=headers, cookies=cookie_out, callback=self.parse_broadbandNo,
                                  meta={'reqeust_url': request_url})
     # 实时/月结账单查询 号段遍历
     def parse_broadbandNo(self,response):
         reqeust_url=response.meta['reqeust_url']
+        logging.warning("response.body = %s ",response.body.decode("gbk"))
         html=etree.HTML(response.body.decode("gbk"))
         time.sleep(10)
         BSS_ACCTMANM_JSESSIONID=html.xpath('//form/@action')[0].split(";")[1]
@@ -153,7 +157,7 @@ class BroadbandSpider(scrapy.Spider):
         query_month=response.meta['query_month']
         error_msg =""
         openmenu_1 = self.driver.find_element_by_id("CSMB043").get_attribute("onclick")
-        logging.warning(openmenu_1)
+        # logging.warning(openmenu_1)
         r_1 = re.findall(r"'([\S\s]+?)'", openmenu_1)
         userinfo_request_url = "https://" + self.province_code + ".cbss.10010.com" + r_1[
             0] + "&staffId=" + self.userName + "&departId=" + self.depart_id + "&subSysCode=CBS&eparchyCode=0010"
@@ -168,64 +172,68 @@ class BroadbandSpider(scrapy.Spider):
             logging.warning("parse_monthly_bill resposne %s", response_str)
             # 用户id
             userid=html.xpath('//input[@name="back_USER_ID"]/@value')[0]
+            logging.warning("userid = %s", userid)
             # user_property_dataForm = self.user_property_dataForm("7","csInterquery", broadbandNo, userid)
             # 账户标识
             try:
-                acctflag=html.xpath("//table/tr[1]/td[2]/text()")[1].strip()
+                acctflag=html.xpath("//table/tr[1]/td[2]/text()")[2].strip()
             except:
-                acctflag = html.xpath("//table/tr[1]/td[2]/text()")[0].strip()
-            logging.warning("acctflag = %s",acctflag)
+                acctflag =html.xpath("//table/tr[1]/td[2]/text()")[1].strip()
+            logging.warning("acctflag = %s",html.xpath("//table/tr[1]/td[2]/text()")[2].strip())
             # 付费类型
             try:
-                paytype=html.xpath("//table/tr[2]/td[2]/text()")[1].strip()
+                paytype=html.xpath("//table/tr[2]/td[2]/text()")[2].strip()
             except:
-                paytype = html.xpath("//table/tr[2]/td[2]/text()")[0].strip()
-            logging.warning("paytype = %s", paytype)
+                paytype = html.xpath("//table/tr[2]/td[2]/text()")[1].strip()
+            logging.warning("paytype = %s",html.xpath("//table/tr[2]/td[2]/text()")[2].strip())
             # 欠费
             try:
-                debtfee=html.xpath("//table/tr[3]/td[2]/text()")[1].strip()
+                debtfee=html.xpath("//table/tr[3]/td[2]/text()")[2].strip()
             except:
-                debtfee = html.xpath("//table/tr[3]/td[2]/text()")[0].strip()
-            logging.warning("debtfee = %s", debtfee)
+                debtfee = html.xpath("//table/tr[3]/td[2]/text()")[1].strip()
+            logging.warning("debtfee = %s", html.xpath("//table/tr[3]/td[2]/text()")[2].strip())
             try:
                 # 融合类型
                 fixtype=html.xpath("//table/tr[4]/td[2]/text()")[1].strip()
             except:
                 fixtype=html.xpath("//table/tr[4]/td[2]/text()")[0].strip()
+            logging.warning("fixtype = %s", html.xpath("//table/tr[4]/td[2]/text()")[1].strip())
             #     付费名称
             try:
-                payname=html.xpath("//table/tr[1]/td[4]/text()")[1].strip()
+                payname=html.xpath("//table/tr[1]/td[4]/text()")[2].strip()
             except:
-                payname = html.xpath("//table/tr[1]/td[4]/text()")[0].strip()
-            logging.warning("payname = %s", payname)
+                payname = html.xpath("//table/tr[1]/td[4]/text()")[1].strip()
+            logging.warning("payname = %s", html.xpath("//table/tr[1]/td[4]/text()")[2].strip())
             # 产品名称
             try:
                 prodname=html.xpath("//table/tr[2]/td[4]/text()")[1].strip()
             except:
                 prodname = html.xpath("//table/tr[2]/td[4]/text()")[0].strip()
-            logging.warning("prodname = %s", prodname)
+            logging.warning("prodname = %s", html.xpath("//table/tr[2]/td[4]/text()")[1].strip())
             # 实时话费
-            fee=html.xpath("//table/tr[3]/td[4]/text()")[1].strip()
-            logging.warning("fee = %s", fee)
+            fee=html.xpath("//table/tr[3]/td[4]/text()")[2].strip()
+            logging.warning("fee = %s", html.xpath("//table/tr[3]/td[4]/text()")[2].strip())
             # 开通状态
             try:
-                openflag=html.xpath("//table/tr[1]/td[6]/text()")[1].strip()
+                openflag=html.xpath("//table/tr[1]/td[6]/text()")[2].strip()
             except:
-                openflag = html.xpath("//table/tr[1]/td[6]/text()")[0].strip()
-            logging.warning("openflag = %s", openflag)
+                openflag = html.xpath("//table/tr[1]/td[6]/text()")[1].strip()
+            logging.warning("openflag = %s", html.xpath("//table/tr[1]/td[6]/text()")[2].strip())
             # 客户品牌
             try:
-                custbrand=html.xpath("//table/tr[2]/td[6]/text()")[1].strip()
+                custbrand=html.xpath("//table/tr[2]/td[6]/text()")[0].strip()
             except:
-                custbrand = html.xpath("//table/tr[2]/td[6]/text()")[0].strip()
-            logging.warning("custbrand = %s", custbrand)
+                custbrand = html.xpath("//table/tr[2]/td[6]/text()")[1].strip()
+            logging.warning("custbrand = %s", html.xpath("//table/tr[2]/td[6]/text()")[0].strip())
             # 实时结余
-            actualbal=html.xpath("//table/tr[3]/td[6]/text()")[1].strip()
-            logging.warning("actualbal = %s", actualbal)
+            actualbal=html.xpath("//table/tr[3]/td[6]/text()")[2].strip()
+            logging.warning("actualbal = %s", html.xpath("//table/tr[3]/td[6]/text()")[2].strip())
             # 客户市县
             custlocation=html.xpath("//table/tr[1]/td[8]/text()")[0].strip()
+            logging.warning("custlocation = %s", html.xpath("//table/tr[1]/td[8]/text()")[0].strip())
             # 信用额度
             creditbal= html.xpath("//table/tr[3]/td[8]/text()")[0].strip()
+            logging.warning("creditbal= %s",html.xpath("//table/tr[3]/td[8]/text()")[0].strip())
             # 总计计费应收
             totalfee = html.xpath("//table[@id='UserBillTable']//tr/td[10]//text()")[-1].strip()
             # 实际计费应收
