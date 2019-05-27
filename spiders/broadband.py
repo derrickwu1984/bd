@@ -103,10 +103,10 @@ class BroadbandSpider(scrapy.Spider):
 
             }
         yield scrapy.Request(request_url, headers=headers, cookies=cookie_out, callback=self.parse_broadbandNo,
-                                 meta={'reqeust_url': request_url})
+                                 meta={'request_url': request_url})
     # 实时/月结账单查询 号段遍历
     def parse_broadbandNo(self,response):
-        reqeust_url=response.meta['reqeust_url']
+        request_url=response.meta['request_url']
         logging.warning("response.body = %s ",response.body.decode("gbk"))
         html=etree.HTML(response.body.decode("gbk"))
         time.sleep(10)
@@ -140,13 +140,13 @@ class BroadbandSpider(scrapy.Spider):
                 cookie_billPage = json.load(f)
             cookie_billPage.update(BSS_ACCTMANM_JSESSIONID_dict)
             post_headers = {
-                'referer':reqeust_url,
+                'referer':request_url,
                 'Host':'bj.cbss.10010.com',
             }
             # 查询月账单信息
             yield scrapy.FormRequest(url=post_url, formdata=data, method="POST",
                                      cookies=cookie_billPage, callback=self.parse_monthly_bill,
-                                     meta={'broadbandNo':phoneNo,"headNo":headNo,"query_month":query_month})
+                                     meta={'broadbandNo':phoneNo,"headNo":headNo,"query_month":query_month,"request_url":request_url})
     # 实时/月结账单查询 数据解析
     def parse_monthly_bill(self, response):
         response_str=response.body.decode("gbk")
@@ -155,12 +155,14 @@ class BroadbandSpider(scrapy.Spider):
         broadbandNo=response.meta['broadbandNo']
         headNo =response.meta['headNo']
         query_month=response.meta['query_month']
+        request_url = response.meta['request_url']
         error_msg =""
         openmenu_1 = self.driver.find_element_by_id("CSMB043").get_attribute("onclick")
         # logging.warning(openmenu_1)
         r_1 = re.findall(r"'([\S\s]+?)'", openmenu_1)
         userinfo_request_url = "https://" + self.province_code + ".cbss.10010.com" + r_1[
             0] + "&staffId=" + self.userName + "&departId=" + self.depart_id + "&subSysCode=CBS&eparchyCode=0010"
+        logging.warning("userinfo_request_url=%s",userinfo_request_url)
         try:
             error_msg=html.xpath("//div[@class='tip']/ul/li/text()")[0].split("：")[0]
         except:
@@ -265,9 +267,10 @@ class BroadbandSpider(scrapy.Spider):
             yield boardbandInfo
             #查询用户综合信息
             yield scrapy.Request(url=userinfo_request_url,headers=self.get_headers(), cookies=self.get_cookie(),
-                                      callback=self.query_user_info,meta={'broadbandNo': broadbandNo},dont_filter=True)
+                                      callback=self.query_user_info,meta={'broadbandNo': broadbandNo,'userinfo_request_url':userinfo_request_url},dont_filter=True)
     def query_user_info(self,response):
         response_str=response.body.decode("gbk")
+        refer_url=response.meta['userinfo_request_url']
         # logging.warning("query_user_info response %s",response_str)
         time.sleep(3)
         html = etree.HTML(response_str)
@@ -294,12 +297,14 @@ class BroadbandSpider(scrapy.Spider):
         logging.warning("service={0}".format(service))
         logging.warning("tabSetList={0}".format(tabSetList))
         headers={
-            "Referer": "https://bj.cbss.10010.com/custserv",
+            # "Referer": "https://bj.cbss.10010.com/essframe?service=page/Sidebar,
+            # "Referer": "https://bj.cbss.10010.com/custserv",
+            "Referer":refer_url,
             'Host': 'bj.cbss.10010.com'
         }
         cookies = self.get_cookie()
         # del cookies["BSS_CUSTSERV_JSESSIONID"]
-        del cookies["LOGIN_SUBSYS_CODECBS"]
+        # del cookies["LOGIN_SUBSYS_CODECBS"]
         json.dumps(cookies)
         dataForm=self.custserv_dataForm(DateField,_BoInfo,ACCPROVICE_ID,allInfo,broadbandNo,ACCPROVICE_ID,currentRightCode,Form0,PROVICE_ID,queryTradehide,service,tabSetList)
         logging.warning('dataForm={0}'.format(dataForm))
@@ -315,6 +320,7 @@ class BroadbandSpider(scrapy.Spider):
         logging.warning(broadbandNo)
         html = etree.HTML(response_str)
         logging.warning("get_user_property__info response %s", response_str)
+        logging.warning("userAttrInfo= %s", html.xpath("//input[@id='userAttrInfo']/@value"))
         jsn = json.loads(html.xpath("//input[@id='userAttrInfo']/@value")[0])
         moffice_name = jsn['MOFFICE_NAME']
         detail_installed_address = jsn['DETAIL_INSTALL_ADDRESS']
