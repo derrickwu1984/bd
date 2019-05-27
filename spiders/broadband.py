@@ -151,7 +151,8 @@ class BroadbandSpider(scrapy.Spider):
     def parse_monthly_bill(self, response):
         response_str=response.body.decode("gbk")
         html = etree.HTML(response_str)
-
+        Cookie = response.request.headers.getlist("Cookie")
+        logging.warning("parse_monthly_bill cookies = %s",Cookie)
         broadbandNo=response.meta['broadbandNo']
         headNo =response.meta['headNo']
         query_month=response.meta['query_month']
@@ -269,6 +270,8 @@ class BroadbandSpider(scrapy.Spider):
             yield scrapy.Request(url=userinfo_request_url,headers=self.get_headers(), cookies=self.get_cookie(),
                                       callback=self.query_user_info,meta={'broadbandNo': broadbandNo,'userinfo_request_url':userinfo_request_url},dont_filter=True)
     def query_user_info(self,response):
+        Cookie = response.request.headers.getlist('Cookie')
+        logging.warning("query_user_info cookies = %s",Cookie)
         response_str=response.body.decode("gbk")
         refer_url=response.meta['userinfo_request_url']
         # logging.warning("query_user_info response %s",response_str)
@@ -300,12 +303,14 @@ class BroadbandSpider(scrapy.Spider):
             # "Referer": "https://bj.cbss.10010.com/essframe?service=page/Sidebar,
             # "Referer": "https://bj.cbss.10010.com/custserv",
             "Referer":refer_url,
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko',
             'Host': 'bj.cbss.10010.com'
         }
         cookies = self.get_cookie()
+        logging.warning(" self.get_cookie()= %s",cookies)
         # del cookies["BSS_CUSTSERV_JSESSIONID"]
-        # del cookies["LOGIN_SUBSYS_CODECBS"]
-        json.dumps(cookies)
+        # del cookies["BSS_ACCTMANM_JSESSIONID"]
+        # json.dumps(cookies)
         dataForm=self.custserv_dataForm(DateField,_BoInfo,ACCPROVICE_ID,allInfo,broadbandNo,ACCPROVICE_ID,currentRightCode,Form0,PROVICE_ID,queryTradehide,service,tabSetList)
         logging.warning('dataForm={0}'.format(dataForm))
         post_intetrated_url="https://bj.cbss.10010.com/custserv"
@@ -313,7 +318,8 @@ class BroadbandSpider(scrapy.Spider):
                                  callback=self.get_user_property__info,meta={'broadbandNo': broadbandNo},dont_filter=True)
     # 获取用户属性信息
     def get_user_property__info(self,response):
-
+        Cookie = response.request.headers.getlist('Cookie')
+        logging.warning("Cookie 2019-5-27 = %s",Cookie)
         broadbandNo = response.meta['broadbandNo']
         time.sleep(5)
         response_str = response.body.decode("gbk")
@@ -407,11 +413,12 @@ class BroadbandSpider(scrapy.Spider):
             "ACCPROVICE_ID": ACCPROVICE_ID,
             "allInfo": allInfo,
             "autoSearch": "no",
+            "BILL_BUNDLE_MONTHS":"",
             "chklistframe17_hidden": "",
             "cond_ALIASE_ACCOUNT_IN": "",
             "cond_CUST_ID": "",
             "cond_CUST_NAME": "",
-            "cond_NET_TYPE_CODE": "50",
+            "cond_NET_TYPE_CODE": "",
             "cond_PAGE_NUM": "",
             "cond_QUERY_METHOD": "0",
             "cond_SERIAL_NUMBER": phoneNo,
@@ -423,6 +430,7 @@ class BroadbandSpider(scrapy.Spider):
             "CURRENT_PRODUCT_NAME": "",
             "currentRightCode": currentRightCode,
             "custTreaty": "",
+            "CYCLE_TYPE":"",
             "DATAFLOWTAG": "0",
             "Form0": Form0,
             "importTag": "1",
@@ -430,6 +438,7 @@ class BroadbandSpider(scrapy.Spider):
             "N6_15906_TAGCODE": "0",
             "N6_17426_USE_TAG": "0",
             "PAY_MODE_CODE": "",
+            "PAYMENT_CYCLE_MONTHS":"",
             "PROVICE_ID": PROVICE_ID,
             "QUERY_TYPE": "on",
             "queryTradehide": queryTradehide,
