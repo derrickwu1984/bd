@@ -328,26 +328,36 @@ class BroadbandSpider(scrapy.Spider):
         logging.warning("get_user_property__info response %s", response_str)
         logging.warning("userAttrInfo= %s", html.xpath("//input[@id='userAttrInfo']/@value"))
         jsn = json.loads(html.xpath("//input[@id='userAttrInfo']/@value")[0])
+        # 局向
         moffice_name = jsn['MOFFICE_NAME']
+        # 详细地址
         detail_installed_address = jsn['DETAIL_INSTALL_ADDRESS']
+        # 标准地址
         installed_address = jsn['INSTALL_ADDRESS']
+        # 标准地址编码
         address_id = jsn['ADDRESS_ID']
+        # 速率
         speed = jsn['SPEED']
+        # 联系人
         link_name = jsn['LINK_NAME']
+        # 联系电话
         link_phone = jsn['LINK_PHONE']
-        use_type_code = jsn['USE_TYPE_CODE']
+        # 使用人性质 1:个人
+        use_type_code = jsn['USETYPE']
+        # 使用人性质、终端启用时间
         terminal_start_date = jsn['TERMINAL_START_DATE']
         logging.warning("============get_user_property_info============")
-        logging.warning("moffice_name %s",moffice_name)
-        logging.warning("detail_installed_address %s",detail_installed_address)
-        logging.warning("installed_address %s",installed_address)
-        logging.warning("address_id %s",address_id)
-        logging.warning("speed %s",speed)
+        logging.warning("宽带号码= %s", broadbandNo)
+        logging.warning("局向= %s",moffice_name)
+        logging.warning("详细地址= %s",detail_installed_address)
+        logging.warning("标准地址= %s",installed_address)
+        logging.warning("标准地址编码= %s",address_id)
+        logging.warning("速率= %s",speed)
 
-        logging.warning("link_name %s",link_name)
-        logging.warning("link_phone %s",link_phone)
-        logging.warning("use_type_code %s",use_type_code)
-        logging.warning("terminal_start_date %s",terminal_start_date)
+        logging.warning("联系人= %s",link_name)
+        logging.warning("联系电话= %s",link_phone)
+        logging.warning("使用人性质= %s",use_type_code)
+        logging.warning("终端启用时间= %s",terminal_start_date)
     # 获取cookie
     def get_cookie(self):
         cookies_dict = {}
