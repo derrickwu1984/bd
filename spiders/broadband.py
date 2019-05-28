@@ -103,7 +103,7 @@ class BroadbandSpider(scrapy.Spider):
     def parse_broadbandNo(self,response):
         request_url=response.meta['request_url']
         html=etree.HTML(response.body.decode("gbk"))
-        time.sleep(10)
+        # time.sleep(10)
         BSS_ACCTMANM_JSESSIONID=html.xpath('//form/@action')[0].split(";")[1]
         service=html.xpath('//input[@name="service"]/@value')[0]
         Form0=html.xpath('//input[@name="Form0"]/@value')[0]
@@ -249,7 +249,7 @@ class BroadbandSpider(scrapy.Spider):
         Cookie = response.request.headers.getlist('Cookie')
         response_str=response.body.decode("gbk")
         refer_url=response.meta['userinfo_request_url']
-        time.sleep(3)
+        # time.sleep(3)
         html = etree.HTML(response_str)
         DateField=""
         _BoInfo=html.xpath('//input[@name="_BoInfo"]/@value')[0]
@@ -280,7 +280,7 @@ class BroadbandSpider(scrapy.Spider):
     # 获取用户属性信息
     def get_user_property__info(self,response):
         broadbandNo = response.meta['broadbandNo']
-        time.sleep(2)
+        # time.sleep(2)
         response_str = response.body.decode("gbk")
         html = etree.HTML(response_str)
         jsn = json.loads(html.xpath("//input[@id='userAttrInfo']/@value")[0])
