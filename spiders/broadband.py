@@ -118,7 +118,7 @@ class BroadbandSpider(scrapy.Spider):
         post_url=self.post_url+BSS_ACCTMANM_JSESSIONID
         headNo = self.broadbandNo
         for subNo in range(int(self.startNo), int(self.endNo)):
-            phoneNo=headNo+str(subNo).zfill(4)
+            phoneNo=headNo+str(subNo).zfill(5)
             cond_NET_TYPE_CODE=''
             cond_PARENT_TYPE_CODE=''
             cond_ROUTE_EPARCHY_CODE='0010'
@@ -301,7 +301,10 @@ class BroadbandSpider(scrapy.Spider):
         # 使用人性质 1:个人
         use_type_code = jsn['USETYPE']
         # 使用人性质、终端启用时间
-        terminal_start_date = jsn['TERMINAL_START_DATE']
+        try:
+            terminal_start_date = jsn['TERMINAL_START_DATE']
+        except:
+            terminal_start_date=""
         # 数据加载到Item
         boardbandItemLoader = ItemLoader(item=BdInfoItem(), response=response)
         boardbandItemLoader.add_value("crawldate", self.crawldate)
