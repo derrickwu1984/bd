@@ -12,7 +12,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 from scrapy.loader import  ItemLoader
-from bd.items import BdItem,CustinfoItem
+from bd.items import BdInfoItem,CustinfoItem
 import time,re
 import json
 import datetime
@@ -30,9 +30,6 @@ class BroadbandSpider(scrapy.Spider):
     # 登陆后的链接
     initmy_url = "https://bj.cbss.10010.com/essframe"
     post_url = "https://bj.cbss.10010.com/acctmanm;"
-
-
-    # post_user_property_url = "https://bj.cbss.10010.com/custserv?service=swallow/common.UtilityPage/getInterfaceElement_first/1"
     # driver_path="D:/tools/IEDriverServer.exe"
     driver_path = "Z:/tools/IEDriverServer.exe"
     # driver_path = "C:/IEDriverServer.exe"
@@ -51,6 +48,7 @@ class BroadbandSpider(scrapy.Spider):
         self.cur_month = self.date_Formate(datetime.datetime.now().month)
         self.cur_day =self.date_Formate(datetime.datetime.now().day)
         self.crawldate = str(datetime.datetime.now().year) + str(self.cur_month) + str(self.cur_day)
+        self.params =''
         pass
 
     # 将月份、日期小于10的前面补充0
@@ -79,7 +77,6 @@ class BroadbandSpider(scrapy.Spider):
         js_query_acct = "var query_acct=document.getElementById('SECOND_MENU_LINK_BIL6500').onclick()"
         self.driver.execute_script(js_query_acct)
         time.sleep(3)
-        # WebDriverWait(driver, 600).until(EC.presence_of_element_located((By.ID, 'CSM1001')))
         WebDriverWait(self.driver, 600).until(EC.presence_of_element_located((By.ID, 'BIL6531')))
         openmenu = self.driver.find_element_by_id("BIL6531").get_attribute("onclick")
         r = re.findall(r"'([\S\s]+?)'", openmenu)
@@ -96,20 +93,17 @@ class BroadbandSpider(scrapy.Spider):
         with open('cookies.txt', 'r') as f:
             cookie_out = json.load(f)
         headers = {
-                # 'referer': 'https://bj.cbss.10010.com/essframe?service=page/component.Navigation&listener=init&needNotify=true&staffId=' + self.userName + '&departId=' + self.depart_id + '&subSysCode=CBS&eparchyCode=0010',
                 'Referer': 'https://bj.cbss.10010.com/essframe?service=page/Sidebar',
                 'Host': 'bj.cbss.10010.com',
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko'
-
             }
         yield scrapy.Request(request_url, headers=headers, cookies=cookie_out, callback=self.parse_broadbandNo,
                                  meta={'request_url': request_url})
     # 实时/月结账单查询 号段遍历
     def parse_broadbandNo(self,response):
         request_url=response.meta['request_url']
-        logging.warning("response.body = %s ",response.body.decode("gbk"))
         html=etree.HTML(response.body.decode("gbk"))
-        time.sleep(10)
+        # time.sleep(10)
         BSS_ACCTMANM_JSESSIONID=html.xpath('//form/@action')[0].split(";")[1]
         service=html.xpath('//input[@name="service"]/@value')[0]
         Form0=html.xpath('//input[@name="Form0"]/@value')[0]
@@ -121,17 +115,14 @@ class BroadbandSpider(scrapy.Spider):
             yy=yy-1
             mm=12
         query_month=str(yy)+str(mm)
-        # #bulid post method
         post_url=self.post_url+BSS_ACCTMANM_JSESSIONID
         headNo = self.broadbandNo
         for subNo in range(int(self.startNo), int(self.endNo)):
-            phoneNo=headNo+str(subNo).zfill(4)
+            phoneNo=headNo+str(subNo).zfill(5)
             cond_NET_TYPE_CODE=''
             cond_PARENT_TYPE_CODE=''
             cond_ROUTE_EPARCHY_CODE='0010'
             data=self.prepare_data(cond_ROUTE_EPARCHY_CODE,query_month,phoneNo,cond_NET_TYPE_CODE,cond_PARENT_TYPE_CODE,cond_ROUTE_EPARCHY_CODE,Form0,service)
-            # logging.warning("============post params============")
-            # logging.warning(data)
             BSS_ACCTMANM_JSESSIONID_array=BSS_ACCTMANM_JSESSIONID.split("=")
             BSS_ACCTMANM_JSESSIONID_key=BSS_ACCTMANM_JSESSIONID_array[0]
             BSS_ACCTMANM_JSESSIONID_value = BSS_ACCTMANM_JSESSIONID_array[1]
@@ -151,19 +142,19 @@ class BroadbandSpider(scrapy.Spider):
     def parse_monthly_bill(self, response):
         response_str=response.body.decode("gbk")
         html = etree.HTML(response_str)
-        Cookie = response.request.headers.getlist("Cookie")
-        logging.warning("parse_monthly_bill cookies = %s",Cookie)
         broadbandNo=response.meta['broadbandNo']
         headNo =response.meta['headNo']
         query_month=response.meta['query_month']
         request_url = response.meta['request_url']
         error_msg =""
-        openmenu_1 = self.driver.find_element_by_id("CSMB043").get_attribute("onclick")
-        # logging.warning(openmenu_1)
-        r_1 = re.findall(r"'([\S\s]+?)'", openmenu_1)
-        userinfo_request_url = "https://" + self.province_code + ".cbss.10010.com" + r_1[
+        try:
+            openmenu_1 = self.driver.find_element_by_id("CSMB043").get_attribute("onclick")
+            r_1 = re.findall(r"'([\S\s]+?)'", openmenu_1)
+            self.params =r_1
+        except:
+            self.params=self.params
+        userinfo_request_url = "https://" + self.province_code + ".cbss.10010.com" + self.params[
             0] + "&staffId=" + self.userName + "&departId=" + self.depart_id + "&subSysCode=CBS&eparchyCode=0010"
-        logging.warning("userinfo_request_url=%s",userinfo_request_url)
         try:
             error_msg=html.xpath("//div[@class='tip']/ul/li/text()")[0].split("：")[0]
         except:
@@ -172,110 +163,93 @@ class BroadbandSpider(scrapy.Spider):
             logging.warning(broadbandNo+"宽带号未查询到或已被注销！")
         else:
             logging.warning(broadbandNo+"宽带号有效！")
-            logging.warning("parse_monthly_bill resposne %s", response_str)
             # 用户id
             userid=html.xpath('//input[@name="back_USER_ID"]/@value')[0]
-            logging.warning("userid = %s", userid)
             # user_property_dataForm = self.user_property_dataForm("7","csInterquery", broadbandNo, userid)
             # 账户标识
             try:
                 acctflag=html.xpath("//table/tr[1]/td[2]/text()")[2].strip()
             except:
                 acctflag =html.xpath("//table/tr[1]/td[2]/text()")[1].strip()
-            logging.warning("acctflag = %s",html.xpath("//table/tr[1]/td[2]/text()")[2].strip())
             # 付费类型
             try:
                 paytype=html.xpath("//table/tr[2]/td[2]/text()")[2].strip()
             except:
                 paytype = html.xpath("//table/tr[2]/td[2]/text()")[1].strip()
-            logging.warning("paytype = %s",html.xpath("//table/tr[2]/td[2]/text()")[2].strip())
             # 欠费
             try:
                 debtfee=html.xpath("//table/tr[3]/td[2]/text()")[2].strip()
             except:
                 debtfee = html.xpath("//table/tr[3]/td[2]/text()")[1].strip()
-            logging.warning("debtfee = %s", html.xpath("//table/tr[3]/td[2]/text()")[2].strip())
             try:
                 # 融合类型
                 fixtype=html.xpath("//table/tr[4]/td[2]/text()")[1].strip()
             except:
                 fixtype=html.xpath("//table/tr[4]/td[2]/text()")[0].strip()
-            logging.warning("fixtype = %s", html.xpath("//table/tr[4]/td[2]/text()")[1].strip())
             #     付费名称
             try:
                 payname=html.xpath("//table/tr[1]/td[4]/text()")[2].strip()
             except:
                 payname = html.xpath("//table/tr[1]/td[4]/text()")[1].strip()
-            logging.warning("payname = %s", html.xpath("//table/tr[1]/td[4]/text()")[2].strip())
             # 产品名称
             try:
                 prodname=html.xpath("//table/tr[2]/td[4]/text()")[1].strip()
             except:
                 prodname = html.xpath("//table/tr[2]/td[4]/text()")[0].strip()
-            logging.warning("prodname = %s", html.xpath("//table/tr[2]/td[4]/text()")[1].strip())
             # 实时话费
             fee=html.xpath("//table/tr[3]/td[4]/text()")[2].strip()
-            logging.warning("fee = %s", html.xpath("//table/tr[3]/td[4]/text()")[2].strip())
             # 开通状态
             try:
                 openflag=html.xpath("//table/tr[1]/td[6]/text()")[2].strip()
             except:
                 openflag = html.xpath("//table/tr[1]/td[6]/text()")[1].strip()
-            logging.warning("openflag = %s", html.xpath("//table/tr[1]/td[6]/text()")[2].strip())
             # 客户品牌
             try:
                 custbrand=html.xpath("//table/tr[2]/td[6]/text()")[0].strip()
             except:
                 custbrand = html.xpath("//table/tr[2]/td[6]/text()")[1].strip()
-            logging.warning("custbrand = %s", html.xpath("//table/tr[2]/td[6]/text()")[0].strip())
             # 实时结余
             actualbal=html.xpath("//table/tr[3]/td[6]/text()")[2].strip()
-            logging.warning("actualbal = %s", html.xpath("//table/tr[3]/td[6]/text()")[2].strip())
             # 客户市县
             custlocation=html.xpath("//table/tr[1]/td[8]/text()")[0].strip()
-            logging.warning("custlocation = %s", html.xpath("//table/tr[1]/td[8]/text()")[0].strip())
             # 信用额度
             creditbal= html.xpath("//table/tr[3]/td[8]/text()")[0].strip()
-            logging.warning("creditbal= %s",html.xpath("//table/tr[3]/td[8]/text()")[0].strip())
             # 总计计费应收
             totalfee = html.xpath("//table[@id='UserBillTable']//tr/td[10]//text()")[-1].strip()
             # 实际计费应收
             actualfee = html.xpath("//table[@id='UserBillTable']//tr/td[14]//text()")[-1].strip()
-
             # 数据加载到Item
-            boardbandItemLoader = ItemLoader(item=BdItem(),response=response)
-            boardbandItemLoader.add_value("crawldate", self.crawldate)
-            boardbandItemLoader.add_value("userid", userid)
-            boardbandItemLoader.add_value("rangeno", headNo)
-            boardbandItemLoader.add_value("broadbandNo", broadbandNo)
-            boardbandItemLoader.add_value("querymonth", query_month)
-            boardbandItemLoader.add_value("acctflag",acctflag)
-            boardbandItemLoader.add_value("paytype",paytype)
-            boardbandItemLoader.add_value("debtfee",debtfee)
-            boardbandItemLoader.add_value("fixtype",fixtype)
-            boardbandItemLoader.add_value("payname",payname)
-            boardbandItemLoader.add_value("prodname",prodname)
-            boardbandItemLoader.add_value("fee",fee)
-            boardbandItemLoader.add_value("openflag",openflag)
-            boardbandItemLoader.add_value("custbrand",custbrand)
-            boardbandItemLoader.add_value("actualbal",actualbal)
-            boardbandItemLoader.add_value("custlocation",custlocation)
-            boardbandItemLoader.add_value("creditbal",creditbal)
-            boardbandItemLoader.add_value("totalfee",totalfee)
-            boardbandItemLoader.add_value("actualfee",actualfee)
-            boardbandInfo = boardbandItemLoader.load_item()
+            CustinfoItemLoader = ItemLoader(item=CustinfoItem(),response=response)
+            CustinfoItemLoader.add_value("crawldate", self.crawldate)
+            CustinfoItemLoader.add_value("userid", userid)
+            CustinfoItemLoader.add_value("rangeno", headNo)
+            CustinfoItemLoader.add_value("broadbandNo", broadbandNo)
+            CustinfoItemLoader.add_value("querymonth", query_month)
+            CustinfoItemLoader.add_value("acctflag",acctflag)
+            CustinfoItemLoader.add_value("paytype",paytype)
+            CustinfoItemLoader.add_value("debtfee",debtfee)
+            CustinfoItemLoader.add_value("fixtype",fixtype)
+            CustinfoItemLoader.add_value("payname",payname)
+            CustinfoItemLoader.add_value("prodname",prodname)
+            CustinfoItemLoader.add_value("fee",fee)
+            CustinfoItemLoader.add_value("openflag",openflag)
+            CustinfoItemLoader.add_value("custbrand",custbrand)
+            CustinfoItemLoader.add_value("actualbal",actualbal)
+            CustinfoItemLoader.add_value("custlocation",custlocation)
+            CustinfoItemLoader.add_value("creditbal",creditbal)
+            CustinfoItemLoader.add_value("totalfee",totalfee)
+            CustinfoItemLoader.add_value("actualfee",actualfee)
+            CustInfo = CustinfoItemLoader.load_item()
             # 宽带信息
-            yield boardbandInfo
+            yield CustInfo
             #查询用户综合信息
             yield scrapy.Request(url=userinfo_request_url,headers=self.get_headers(), cookies=self.get_cookie(),
                                       callback=self.query_user_info,meta={'broadbandNo': broadbandNo,'userinfo_request_url':userinfo_request_url},dont_filter=True)
     def query_user_info(self,response):
         Cookie = response.request.headers.getlist('Cookie')
-        logging.warning("query_user_info cookies = %s",Cookie)
         response_str=response.body.decode("gbk")
         refer_url=response.meta['userinfo_request_url']
-        # logging.warning("query_user_info response %s",response_str)
-        time.sleep(3)
+        # time.sleep(3)
         html = etree.HTML(response_str)
         DateField=""
         _BoInfo=html.xpath('//input[@name="_BoInfo"]/@value')[0]
@@ -288,17 +262,6 @@ class BroadbandSpider(scrapy.Spider):
         queryTradehide=html.xpath('//input[@name="queryTradehide"]/@value')[0]
         service=html.xpath('//input[@name="service"]/@value')[0]
         tabSetList=html.xpath('//input[@name="tabSetList"]/@value')[0]
-
-        logging.warning("_BoInfo={0}".format(_BoInfo))
-        logging.warning("ACCPROVICE_ID={0}".format(ACCPROVICE_ID))
-        logging.warning("allInfo={0}".format(allInfo))
-        logging.warning("broadbandNo={0}".format(broadbandNo))
-        logging.warning("currentRightCode={0}".format(currentRightCode))
-        logging.warning("Form0={0}".format(Form0))
-        logging.warning("PROVICE_ID={0}".format(PROVICE_ID))
-        logging.warning("queryTradehide={0}".format(queryTradehide))
-        logging.warning("service={0}".format(service))
-        logging.warning("tabSetList={0}".format(tabSetList))
         headers={
             # "Referer": "https://bj.cbss.10010.com/essframe?service=page/Sidebar,
             # "Referer": "https://bj.cbss.10010.com/custserv",
@@ -307,26 +270,19 @@ class BroadbandSpider(scrapy.Spider):
             'Host': 'bj.cbss.10010.com'
         }
         cookies = self.get_cookie()
-        logging.warning(" self.get_cookie()= %s",cookies)
         # del cookies["BSS_CUSTSERV_JSESSIONID"]
         # del cookies["BSS_ACCTMANM_JSESSIONID"]
         # json.dumps(cookies)
         dataForm=self.custserv_dataForm(DateField,_BoInfo,ACCPROVICE_ID,allInfo,broadbandNo,ACCPROVICE_ID,currentRightCode,Form0,PROVICE_ID,queryTradehide,service,tabSetList)
-        logging.warning('dataForm={0}'.format(dataForm))
         post_intetrated_url="https://bj.cbss.10010.com/custserv"
         yield scrapy.FormRequest(url=post_intetrated_url, formdata=dataForm, method="POST", headers=headers,cookies=cookies,
                                  callback=self.get_user_property__info,meta={'broadbandNo': broadbandNo},dont_filter=True)
     # 获取用户属性信息
     def get_user_property__info(self,response):
-        Cookie = response.request.headers.getlist('Cookie')
-        logging.warning("Cookie 2019-5-27 = %s",Cookie)
         broadbandNo = response.meta['broadbandNo']
-        time.sleep(5)
+        # time.sleep(2)
         response_str = response.body.decode("gbk")
-        logging.warning(broadbandNo)
         html = etree.HTML(response_str)
-        logging.warning("get_user_property__info response %s", response_str)
-        logging.warning("userAttrInfo= %s", html.xpath("//input[@id='userAttrInfo']/@value"))
         jsn = json.loads(html.xpath("//input[@id='userAttrInfo']/@value")[0])
         # 局向
         moffice_name = jsn['MOFFICE_NAME']
@@ -345,19 +301,27 @@ class BroadbandSpider(scrapy.Spider):
         # 使用人性质 1:个人
         use_type_code = jsn['USETYPE']
         # 使用人性质、终端启用时间
-        terminal_start_date = jsn['TERMINAL_START_DATE']
-        logging.warning("============get_user_property_info============")
-        logging.warning("宽带号码= %s", broadbandNo)
-        logging.warning("局向= %s",moffice_name)
-        logging.warning("详细地址= %s",detail_installed_address)
-        logging.warning("标准地址= %s",installed_address)
-        logging.warning("标准地址编码= %s",address_id)
-        logging.warning("速率= %s",speed)
+        try:
+            terminal_start_date = jsn['TERMINAL_START_DATE']
+        except:
+            terminal_start_date=""
+        # 数据加载到Item
+        boardbandItemLoader = ItemLoader(item=BdInfoItem(), response=response)
+        boardbandItemLoader.add_value("crawldate", self.crawldate)
+        boardbandItemLoader.add_value("broadbandNo", broadbandNo)
+        boardbandItemLoader.add_value("moffice_name", moffice_name)
+        boardbandItemLoader.add_value("detail_installed_address", detail_installed_address)
+        boardbandItemLoader.add_value("installed_address", installed_address)
+        boardbandItemLoader.add_value("address_id", address_id)
+        boardbandItemLoader.add_value("speed", speed)
+        boardbandItemLoader.add_value("link_name", link_name)
+        boardbandItemLoader.add_value("link_phone", link_phone)
+        boardbandItemLoader.add_value("use_type_code", use_type_code)
+        boardbandItemLoader.add_value("terminal_start_date", terminal_start_date)
 
-        logging.warning("联系人= %s",link_name)
-        logging.warning("联系电话= %s",link_phone)
-        logging.warning("使用人性质= %s",use_type_code)
-        logging.warning("终端启用时间= %s",terminal_start_date)
+        boardbandInfo = boardbandItemLoader.load_item()
+        # 宽带信息
+        yield boardbandInfo
     # 获取cookie
     def get_cookie(self):
         cookies_dict = {}
