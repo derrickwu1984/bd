@@ -6,12 +6,51 @@
 # https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 
 from scrapy import signals
+import random,time
+import scrapy, base64
+from scrapy import log
 
+
+#代理服务器
+proxyServer = "http://http-dyn.abuyun.com:9020"
+# 代理隧道验证信息
+proxyUser = "HW516A06E1RL712D"
+proxyPass = "A066C0217F2B417B"
+proxyAuth = "Basic " + base64.urlsafe_b64encode(bytes((proxyUser + ":" + proxyPass), "ascii")).decode("utf8")
 
 class BdSpiderMiddleware(object):
     # Not all methods need to be defined. If a method is not defined,
     # scrapy acts as if the spider middleware does not modify the
     # passed objects.
+
+    def process_request(self, request, spider):
+        '''对request对象加上proxy'''
+        proxy = self.get_random_proxy()
+        print("this is request ip:" + proxy)
+        request.meta['proxy'] = proxy
+
+    def process_response(self, request, response, spider):
+        '''对返回的response处理'''
+        # 如果返回的response状态不是200，重新生成当前request对象
+        if response.status != 200:
+            proxy = self.get_random_proxy()
+            print("this is response ip:" + proxy)
+            # 对当前reque加上代理
+            request.meta['proxy'] = proxy
+            return request
+        return response
+
+    def get_random_proxy(self):
+        '''随机从文件中读取proxy'''
+        while 1:
+            with open('proxies.txt', 'r') as f:
+                proxies = f.readlines()
+                if proxies:
+                    break
+                else:
+                    time.sleep(1)
+        proxy = random.choice(proxies).strip()
+        return proxy
 
     @classmethod
     def from_crawler(cls, crawler):
@@ -68,26 +107,8 @@ class BdDownloaderMiddleware(object):
         crawler.signals.connect(s.spider_opened, signal=signals.spider_opened)
         return s
 
-    def process_request(self, request, spider):
-        # Called for each request that goes through the downloader
-        # middleware.
 
-        # Must either:
-        # - return None: continue processing this request
-        # - or return a Response object
-        # - or return a Request object
-        # - or raise IgnoreRequest: process_exception() methods of
-        #   installed downloader middleware will be called
-        return None
 
-    def process_response(self, request, response, spider):
-        # Called with the response returned from the downloader.
-
-        # Must either;
-        # - return a Response object
-        # - return a Request object
-        # - or raise IgnoreRequest
-        return response
 
     def process_exception(self, request, exception, spider):
         # Called when a download handler or a process_request()
@@ -101,3 +122,9 @@ class BdDownloaderMiddleware(object):
 
     def spider_opened(self, spider):
         spider.logger.info('Spider opened: %s' % spider.name)
+
+class ProxyServerMiddleware(object):
+    def process_request(self, request, spider):
+        request.meta["proxy"] = proxyServer
+
+        request.headers["Proxy-Authorization"] = proxyAuth

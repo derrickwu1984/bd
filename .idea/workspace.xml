@@ -2,27 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="88bc12b2-6e61-4132-94d1-efcba7f260b3" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/bd.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/bd/proxies.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cookies.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/env/list.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/env/mysqlclient-1.4.2-cp36-cp36m-win_amd64.whl" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/env/pipcmd.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/items.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/middlewares.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pipelines.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spiders/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spiders/broadband.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test1.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/宽带.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bd/middlewares.py" beforeDir="false" afterPath="$PROJECT_DIR$/bd/middlewares.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bd/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/bd/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bd/spiders/broadband.py" beforeDir="false" afterPath="$PROJECT_DIR$/bd/spiders/broadband.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/dbhelper.py" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -33,15 +19,16 @@
   </component>
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/bd$test.coverage" NAME="test Coverage Results" MODIFIED="1555601382440" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/bd$main.coverage" NAME="main Coverage Results" MODIFIED="1561381720074" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/bd" />
+    <SUITE FILE_PATH="coverage/bd$main.coverage" NAME="main Coverage Results" MODIFIED="1561442790622" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/bd" />
+    <SUITE FILE_PATH="coverage/bd$proxies.coverage" NAME="proxies Coverage Results" MODIFIED="1561436574750" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/bd" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/bd/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="192">
-              <caret line="8" column="37" lean-forward="true" selection-start-line="8" selection-start-column="37" selection-end-line="8" selection-end-column="37" />
+            <state relative-caret-position="144">
+              <caret line="6" column="30" selection-start-line="6" selection-start-column="30" selection-end-line="6" selection-end-column="30" />
               <folding>
                 <element signature="e#0#34#0" expanded="true" />
               </folding>
@@ -49,11 +36,61 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="broadband.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="broadband.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/bd/spiders/broadband.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="120">
-              <caret line="37" column="43" lean-forward="true" selection-start-line="37" selection-start-column="43" selection-end-line="37" selection-end-column="43" />
+              <caret line="34" column="43" lean-forward="true" selection-start-line="34" selection-start-column="43" selection-end-line="34" selection-end-column="43" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="middlewares.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/bd/middlewares.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="72">
+              <caret line="17" column="29" selection-start-line="17" selection-start-column="29" selection-end-line="17" selection-end-column="29" />
+              <folding>
+                <element signature="e#169#195#0" expanded="true" />
+                <element signature="e#297#2892#0" />
+                <element signature="e#2932#4575#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bd/settings.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="165">
+              <caret line="56" column="43" selection-start-line="56" selection-start-column="43" selection-end-line="56" selection-end-column="43" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="proxies.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bd/proxies.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="192">
+              <caret line="15" column="28" lean-forward="true" selection-start-line="15" selection-start-column="28" selection-end-line="15" selection-end-column="28" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="proxies.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bd/proxies.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="120">
+              <caret line="5" column="26" lean-forward="true" selection-start-line="5" selection-start-column="26" selection-end-line="5" selection-end-column="26" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="scrapy.cfg" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/scrapy.cfg">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="240">
+              <caret line="10" column="12" selection-start-line="10" selection-start-column="12" selection-end-line="10" selection-end-column="12" />
             </state>
           </provider>
         </entry>
@@ -64,6 +101,9 @@
     <findStrings>
       <find>post_user_property_url</find>
       <find>userinfo</find>
+      <find>process_response</find>
+      <find>process_request</find>
+      <find>DOWNLOADER_MIDDLEWARES</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -81,6 +121,8 @@
         <option value="$PROJECT_DIR$/items.py" />
         <option value="$PROJECT_DIR$/spiders/broadband.py" />
         <option value="$PROJECT_DIR$/bd/spiders/broadband.py" />
+        <option value="$PROJECT_DIR$/bd/settings.py" />
+        <option value="$PROJECT_DIR$/bd/middlewares.py" />
       </list>
     </option>
   </component>
@@ -104,7 +146,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -117,16 +158,11 @@
               <item name="bd" type="462c0819:PsiDirectoryNode" />
               <item name="bd" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="bd" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bd" type="462c0819:PsiDirectoryNode" />
-              <item name="bd" type="462c0819:PsiDirectoryNode" />
-              <item name="spiders" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -137,12 +173,15 @@
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="Z:\projects\bd\bd\env" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\projects\bd\bd" />
+      <recent name="E:\projects\bd" />
       <recent name="Z:\projects\bd\bd" />
       <recent name="D:\projects\bd\bd" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\projects\bd\bd" />
+      <recent name="Z:\projects\bd\bd\env" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -157,7 +196,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.main">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="bd" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -177,9 +216,33 @@
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
+    <configuration name="proxies" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="bd" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/bd" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/bd/proxies.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <list>
+      <item itemvalue="Python.main" />
+      <item itemvalue="Python.proxies" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.main" />
+        <item itemvalue="Python.proxies" />
       </list>
     </recent_temporary>
   </component>
@@ -212,17 +275,17 @@
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32843137" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.38842976" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Python Console" order="7" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.4231405" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.32843137" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.13918306" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14145234" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="right" id="SciView" order="3" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -240,263 +303,20 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="1" />
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/bd/middlewares.py</url>
+          <line>20</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="2" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-column="20" />
-          <folding>
-            <element signature="e#69#84#0" expanded="true" />
-            <element signature="e#113#43715#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/env/pipcmd.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="24">
-          <caret line="1" column="57" selection-start-line="1" selection-start-column="57" selection-end-line="1" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/items.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="10" column="12" selection-start-line="10" selection-start-column="6" selection-end-line="10" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="48">
-          <caret line="3" selection-start-line="3" selection-end-line="3" />
-          <folding>
-            <element signature="e#0#34#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scrapy.cfg">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="10" column="12" selection-start-line="10" selection-start-column="12" selection-end-line="10" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/宽带.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="12" column="34" selection-start-line="12" selection-start-column="34" selection-end-line="12" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/env/list.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="96">
-          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spiders/broadband.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336">
-          <caret line="14" column="7" selection-start-line="14" selection-start-column="7" selection-end-line="14" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-column="20" />
-          <folding>
-            <element signature="e#69#84#0" expanded="true" />
-            <element signature="e#113#43715#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/env/pipcmd.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="27">
-          <caret line="1" column="57" selection-start-line="1" selection-start-column="57" selection-end-line="1" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spiders/broadband.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="756">
-          <caret line="47" column="26" selection-start-line="47" selection-start-column="26" selection-end-line="47" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="54">
-          <caret line="3" selection-start-line="3" selection-end-line="3" />
-          <folding>
-            <element signature="e#0#34#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/宽带.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="12" column="34" selection-start-line="12" selection-start-column="34" selection-end-line="12" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/env/list.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scrapy.cfg">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="10" column="12" selection-start-line="10" selection-start-column="12" selection-end-line="10" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-column="20" />
-          <folding>
-            <element signature="e#69#84#0" expanded="true" />
-            <element signature="e#113#43715#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/env/pipcmd.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="27">
-          <caret line="1" selection-start-line="1" selection-end-line="1" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/宽带.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="837">
-          <caret line="31" selection-start-line="31" selection-end-line="31" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/env/list.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="7" selection-start-line="7" selection-end-line="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spiders/broadband.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6183">
-          <caret line="248" column="34" selection-start-line="248" selection-start-column="34" selection-end-line="248" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336">
-          <caret line="133" column="30" selection-start-line="133" selection-start-column="30" selection-end-line="133" selection-end-column="30" />
-          <folding>
-            <element signature="e#69#84#0" expanded="true" />
-            <element signature="e#113#43715#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/env/pipcmd.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="54" selection-start-column="54" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="351">
-          <caret line="134" column="42" selection-start-line="134" selection-start-column="42" selection-end-line="134" selection-end-column="42" />
-          <folding>
-            <element signature="e#69#84#0" expanded="true" />
-            <element signature="e#113#43715#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-column="20" />
-          <folding>
-            <element signature="e#69#84#0" expanded="true" />
-            <element signature="e#113#43715#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/env/list.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="96">
-          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="48">
-          <caret line="3" selection-start-line="3" selection-end-line="3" />
-          <folding>
-            <element signature="e#0#34#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/宽带.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="12" column="34" selection-start-line="12" selection-start-column="34" selection-end-line="12" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/env/pipcmd.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="24">
-          <caret line="1" column="57" selection-start-line="1" selection-start-column="57" selection-end-line="1" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/items.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="10" column="12" selection-start-line="10" selection-start-column="6" selection-end-line="10" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spiders/broadband.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="215">
-          <caret line="16" column="11" lean-forward="true" selection-start-line="16" selection-start-column="11" selection-end-line="16" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scrapy.cfg">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="10" column="12" selection-start-line="10" selection-start-column="12" selection-end-line="10" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/bd/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
+        <state relative-caret-position="168">
           <caret line="8" column="37" lean-forward="true" selection-start-line="8" selection-start-column="37" selection-end-line="8" selection-end-column="37" />
           <folding>
             <element signature="e#0#34#0" expanded="true" />
@@ -506,8 +326,110 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/bd/spiders/broadband.py">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="37" column="24" lean-forward="true" selection-start-line="37" selection-start-column="24" selection-end-line="37" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test.py" />
+    <entry file="file://$PROJECT_DIR$/env/pipcmd.txt" />
+    <entry file="file://$PROJECT_DIR$/items.py" />
+    <entry file="file://$PROJECT_DIR$/main.py" />
+    <entry file="file://$PROJECT_DIR$/scrapy.cfg">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="10" column="12" selection-start-line="10" selection-start-column="12" selection-end-line="10" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/宽带.txt" />
+    <entry file="file://$PROJECT_DIR$/env/list.txt" />
+    <entry file="file://$PROJECT_DIR$/spiders/broadband.py" />
+    <entry file="file://$PROJECT_DIR$/test.py" />
+    <entry file="file://$PROJECT_DIR$/env/pipcmd.txt" />
+    <entry file="file://$PROJECT_DIR$/spiders/broadband.py" />
+    <entry file="file://$PROJECT_DIR$/main.py" />
+    <entry file="file://$PROJECT_DIR$/宽带.txt" />
+    <entry file="file://$PROJECT_DIR$/env/list.txt" />
+    <entry file="file://$PROJECT_DIR$/scrapy.cfg">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="10" column="12" selection-start-line="10" selection-start-column="12" selection-end-line="10" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test.py" />
+    <entry file="file://$PROJECT_DIR$/env/pipcmd.txt" />
+    <entry file="file://$PROJECT_DIR$/宽带.txt" />
+    <entry file="file://$PROJECT_DIR$/env/list.txt" />
+    <entry file="file://$PROJECT_DIR$/spiders/broadband.py" />
+    <entry file="file://$PROJECT_DIR$/test.py" />
+    <entry file="file://$PROJECT_DIR$/env/pipcmd.txt" />
+    <entry file="file://$PROJECT_DIR$/test.py" />
+    <entry file="file://$PROJECT_DIR$/test.py" />
+    <entry file="file://$PROJECT_DIR$/env/list.txt" />
+    <entry file="file://$PROJECT_DIR$/main.py" />
+    <entry file="file://$PROJECT_DIR$/宽带.txt" />
+    <entry file="file://$PROJECT_DIR$/env/pipcmd.txt" />
+    <entry file="file://$PROJECT_DIR$/items.py" />
+    <entry file="file://$PROJECT_DIR$/spiders/broadband.py" />
+    <entry file="file://$PROJECT_DIR$/middlewares.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bd/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="6" column="30" selection-start-line="6" selection-start-column="30" selection-end-line="6" selection-end-column="30" />
+          <folding>
+            <element signature="e#0#34#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bd/spiders/broadband.py">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
-          <caret line="37" column="43" lean-forward="true" selection-start-line="37" selection-start-column="43" selection-end-line="37" selection-end-column="43" />
+          <caret line="34" column="43" lean-forward="true" selection-start-line="34" selection-start-column="43" selection-end-line="34" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scrapy.cfg">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="10" column="12" selection-start-line="10" selection-start-column="12" selection-end-line="10" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bd/proxies.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="15" column="28" lean-forward="true" selection-start-line="15" selection-start-column="28" selection-end-line="15" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bd/proxies.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="5" column="26" lean-forward="true" selection-start-line="5" selection-start-column="26" selection-end-line="5" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bd/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="56" column="43" selection-start-line="56" selection-start-column="43" selection-end-line="56" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bd/middlewares.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="72">
+          <caret line="17" column="29" selection-start-line="17" selection-start-column="29" selection-end-line="17" selection-end-column="29" />
+          <folding>
+            <element signature="e#169#195#0" expanded="true" />
+            <element signature="e#297#2892#0" />
+            <element signature="e#2932#4575#0" />
+          </folding>
         </state>
       </provider>
     </entry>

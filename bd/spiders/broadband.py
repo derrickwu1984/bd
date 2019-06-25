@@ -30,8 +30,8 @@ class BroadbandSpider(scrapy.Spider):
     # 登陆后的链接
     initmy_url = "https://bj.cbss.10010.com/essframe"
     post_url = "https://bj.cbss.10010.com/acctmanm;"
-    # driver_path="D:/tools/IEDriverServer.exe"
-    driver_path = "Z:/tools/IEDriverServer.exe"
+    driver_path="D:/tools/IEDriverServer.exe"
+    # driver_path = "Z:/tools/IEDriverServer.exe"
     # driver_path = "C:/IEDriverServer.exe"
     userName = "bjsc-zhaomx6"
     passWd = "wang1985@"
